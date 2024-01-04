@@ -14,6 +14,7 @@ except Exception as e:
     logger.exception(e)
     raise e
 
+STAGE_NAME= "Prepare Base Model Stage"
 try:
     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
     data_ingestion =PrepareBaseModelTrainingPipeline()
