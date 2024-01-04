@@ -1,6 +1,7 @@
 from Asian_African_Elephants_Classification.constants import *
 from Asian_African_Elephants_Classification.utils.common import read_yaml,create_directories
-from Asian_African_Elephants_Classification.entity.config_entity import (DataIngestionConfig,PrepareBaseModelConfig,PrepareCallbacksConfig,TrainingConfig)
+from Asian_African_Elephants_Classification.entity.config_entity import (DataIngestionConfig,PrepareBaseModelConfig,PrepareCallbacksConfig,TrainingConfig,EvaluationConfig)
+from pathlib import Path
 import os
 
 class ConfigurationManager:
@@ -87,4 +88,14 @@ class ConfigurationManager:
         )
 
         return training_config
+    
+    def get_validation_config(self) -> EvaluationConfig:
+        eval_config = EvaluationConfig(
+            path_of_model=Path("artifacts/training/model.h5"),
+            training_data=Path("artifacts/data_ingestion/Asian-African-Elephants-Classification_Dataset"),
+            all_params=self.params,
+            params_image_size=self.params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE
+        )
+        return eval_config
     
