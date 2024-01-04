@@ -46,3 +46,74 @@ stages:
       md5: 61353864a654dd82a9d720fa5b232e27.dir
       size: 118059248
       nfiles: 2
+  training:
+    cmd: python src/Asian_African_Elephants_Classification/pipeline/stage_03_training.py
+    deps:
+    - path: artifacts/data_ingestion/Asian-African-Elephants-Classification_Dataset
+      hash: md5
+      md5: e8f5565cdaf571f0e2d475c082d1ce95.dir
+      size: 28068091
+      nfiles: 837
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: 61353864a654dd82a9d720fa5b232e27.dir
+      size: 118059248
+      nfiles: 2
+    - path: config/config.yaml
+      hash: md5
+      md5: 14c434b87667151eff8170962059bd75
+      size: 819
+    - path: src/Asian_African_Elephants_Classification/components/prepare_callbacks.py
+      hash: md5
+      md5: bf15ce7fceedf562b5005c9a099408cf
+      size: 1079
+    - path: src/Asian_African_Elephants_Classification/pipeline/stage_03_training.py
+      hash: md5
+      md5: 3f8db5f041fa0b4158b26598c7adc047
+      size: 1370
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 16
+        EPOCHS: 10
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: b87c9626411830383a80cdbc8669f7e3
+      size: 59340720
+  evaluation:
+    cmd: python src/Asian_African_Elephants_Classification/pipeline/stage_04_evaluation.py
+    deps:
+    - path: artifacts/data_ingestion/Asian-African-Elephants-Classification_Dataset
+      hash: md5
+      md5: e8f5565cdaf571f0e2d475c082d1ce95.dir
+      size: 28068091
+      nfiles: 837
+    - path: artifacts/training/model.h5
+      hash: md5
+      md5: b87c9626411830383a80cdbc8669f7e3
+      size: 59340720
+    - path: config/config.yaml
+      hash: md5
+      md5: 14c434b87667151eff8170962059bd75
+      size: 819
+    - path: src/Asian_African_Elephants_Classification/pipeline/stage_04_evaluation.py
+      hash: md5
+      md5: b3930c44a7f7bed2994ca9052f70d13c
+      size: 944
+    params:
+      params.yaml:
+        BATCH_SIZE: 16
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: scores.json
+      hash: md5
+      md5: e97c5d087a94f49ff993871f123cc380
+      size: 72
